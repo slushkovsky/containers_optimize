@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <title>Containers optimization</title>
+
+    <style>
+      td, 
+      th {
+        width: 200px;
+        padding: 0;
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <table>
+      <thead>
+        <th>
+        </th>
+      </thead>
+      <tbody>
+        <tr>
+        </tr>
+      </tbody>
+    </table>
+    <script>
+      'use strict';
+
+      const DATA_UPDATE_TIMEOUT = 2000;
+
+      function set_servers_count(count) {
+         let header = document.querySelector('thead tr')
+         let body = document.querySelector('tbody tr')
+
+         header.innerHTML = ''
+         body.innerHTML = ''
+
+         for (let i = 0; i < count; i++) {
+           header.innerHTML += `<th>Server ${i + 1}</th>`
+           body.innerHTML += '<td></td>'
+         }
+      }
+
+      function put_container({id, server}) {
+        let elem_id = `container-${id}`
+        
+        let old_elem = document.querySelector('#' + elem_id)
+        if (old_elem)
+          old_elem.remove()
+        
+        let td = document.querySelectorAll('tbody tr td')[server - 1]
+        
+        td.innerHTML += `<div id="${elem_id}">Container ${id}</div>`
+      }
+
+      function upd_data() {
+        fetch('/data')
+          .then(response => response.json())
+          .then(response => {
+            console.log(response)
+            set_servers_count(response.servers_count)
+            for (let i in response.containers)
+              put_container(response.containers[i])
+          })
+      }
+
+      function upd_data_periodicly(timeout) {
+         upd_data()
+         setTimeout(() => {
+           upd_data_periodicly(timeout);
+         }, timeout);
+      }
+
+      upd_data_periodicly(DATA_UPDATE_TIMEOUT)
+    </script>
+  </body>
+</html>
