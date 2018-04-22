@@ -21,8 +21,8 @@ class Net(object):
         #Нейросеть принимает на вход выбранное действие
         # и соответствующий выигрыш,
         #чтобы оценить функцию потерь и обновить веса модели.
-        self.reward_holder = tf.placeholder(shape=[None], dtype=tf.float32)
-        self.action_holder = tf.placeholder(shape=[None], dtype=tf.int32)
+        self.reward_holder = tf.placeholder(shape=[None], dtype=tf.float32, name='reward_holder')
+        self.action_holder = tf.placeholder(shape=[None], dtype=tf.int32, name='action_holder')
         
         self.indexes = tf.range(0, tf.shape(self.layer_output)[0]) * tf.shape(self.layer_output)[1] + self.action_holder
 

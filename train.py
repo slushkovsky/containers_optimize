@@ -42,9 +42,9 @@ if __name__ == '__main__':
                 feed_dict={
                     net.layer_input: [state]
                 }
-            )
+            )[0]
 
-            new_state, step_reward = env.step(action[0])
+            new_state, step_reward = env.step(action)
             history.add(state, action, step_reward, new_state)
             
             state = new_state
