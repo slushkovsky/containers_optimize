@@ -3,23 +3,25 @@ import numpy as np
 
 from net import Net
 from history import History
-from env import env
+from env.env import Env
+from env.log import logger
 import settings
 
 
 if __name__ == '__main__':
-    servers_count = 2
-    containers_count = 2
+    servers_count = 3
+    containers_count = 20
 
     tf.reset_default_graph() #Очищаем граф tensorflow
 
-    env = Env(server_count=servers_count, containers_count=containers_count)
+    env = Env(servers_count=servers_count, containers_count=containers_count)
     net = Net(
         learning_rate=settings.LEARNING_RATE,
-        states_count=env.state_size,
-        actions_count=env.actions_count,
+        input_count=env.state_size,
+        output_count=env.actions_count,
         hidden_count=settings.NN_HIDDEN_COUNT
     )
+
     history = History()
 
     init = tf.global_variables_initializer()
@@ -38,11 +40,11 @@ if __name__ == '__main__':
             action = sess.run(
                 net.chosen_action,
                 feed_dict={
-                    net.state_in: [state]
+                    net.layer_input: [state]
                 }
             )
 
-            new_state, step_reward = env.step(action)
+            new_state, step_reward = env.step(action[0])
             history.add(state, action, step_reward, new_state)
             
             state = new_state
@@ -52,7 +54,7 @@ if __name__ == '__main__':
                 feed_dict={
                     net.reward_holder: history.discounted_rewards(gamma=settings.REWARD_HISTORY_DISCOUNT),
                     net.action_holder: history.get_actions(),
-                    net.state_in: np.vstack(history.get_states())
+                    net.layer_input: np.vstack(history.get_states())
                 }
             )
 

@@ -1,7 +1,7 @@
 import random
 
-from utils import Resources
-from rps_nature import RPSNature
+from .utils import Resources
+from .rps_nature import RPSNature
 
 
 class ContainerDemands(object):

@@ -4,15 +4,17 @@ import random
 import redis
 
 #import frontend.app
-from utils import Resources
-from server import Server
-from container import Container
-from state import State
-from log import logger
+from .utils import Resources
+from .server import Server
+from .container import Container
+from .state import State
+from .log import logger
 
 
 class Env(object):
     def __init__(self, servers_count: int, containers_count: int):
+        logger.info(f'Initilizing environment (servers count: {servers_count}, containers count: {containers_count})')
+
         self.servers_count = servers_count
         self.servers = [Server.random_aws_instance() for _ in range(servers_count)]
         self.containers = [Container.create_random() for _ in range(containers_count)]
@@ -48,7 +50,7 @@ class Env(object):
         was_moved = self.__actions[action]()
         reward = self.__get_step_reward(was_moved)
 
-        logger.info(f'Environment step {self.step_num} done, reward={reward}')
+        logger.info(f'Environment step {self.step_num} done, reward={reward} (action={action})')
         
         self.step_num += 1
 

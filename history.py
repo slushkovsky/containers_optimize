@@ -4,7 +4,7 @@ import numpy as np
 class HistoryItem(object):
     def __init__(self, state, action, step_reward, new_state):
         self.state = state
-        self.acton = action
+        self.action = action
         self.step_reward = step_reward
         self.new_state = new_state
 
@@ -22,7 +22,7 @@ class History(list):
         return [item.step_reward for item in self]
 
     def discounted_rewards(self, gamma):
-        rewards = np.array(item.step_reward for item in self)
+        rewards = np.array([item.step_reward for item in self])
         discounted_r = np.zeros_like(rewards)
         running_add = 0
 

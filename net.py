@@ -2,10 +2,13 @@ import tensorflow as tf
 import tensorflow.contrib.slim as slim
 import numpy as np
 
+from env.log import logger
+
 
 class Net(object):
     
     def __init__(self, learning_rate, input_count, hidden_count, output_count):
+        logger.info(f'Initilizing net (learning rate: {learning_rate}, inputs: {input_count}, hidden: {hidden_count}, outputs: {output_count})')
         self.create_layers(
             input_count=input_count,
             output_count=output_count,
@@ -31,7 +34,7 @@ class Net(object):
         self.loss = -tf.reduce_mean(tf.log(self.responsible_outputs) * self.reward_holder) 
         
         tvars = tf.trainable_variables()
-        self.gradient_holders = [tf.placeholder(dtype=tf.float32, name=f'{i}_holder') for i, _ in enumarate(tvars))
+        self.gradient_holders = [tf.placeholder(dtype=tf.float32, name=f'{i}_holder') for i, _ in enumerate(tvars)]
         self.gradients = tf.gradients(self.loss, tvars)
         
         optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate) 

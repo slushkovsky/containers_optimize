@@ -1,7 +1,7 @@
 import random
 import json
 
-from utils import Resources
+from .utils import Resources
 
 
 class Server(object):
@@ -27,7 +27,7 @@ class Server(object):
         return cls(cretaed_count, *args, **kw)
 
     @classmethod
-    def random_aws_instance(cls, instances_file='aws_instances.json'):
+    def random_aws_instance(cls, instances_file='env/aws_instances.json'):
         with open(instances_file) as f:
             instances = json.load(f)
 
