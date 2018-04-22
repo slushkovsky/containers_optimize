@@ -1,0 +1,97 @@
+{
+  "t2.nano": {
+    "cpu_count": 1,
+    "ram": 0.5,
+    "bandwidth": 20
+  },
+  "t2.micro": {
+    "cpu_count": 1,
+    "ram": 1,
+    "bandwidth": 70
+  },
+  "t2.small": {
+    "cpu_count": 1,
+    "ram": 2,
+    "bandwidth": 125
+  },
+  "t2.medium": {
+    "cpu_count": 2,
+    "ram": 4,
+    "bandwidth": 250
+  },
+  "t2.large": {
+    "cpu_count": 2,
+    "ram": 8,
+    "bandwidth": 500
+  },
+  "t2.xlarge": {
+    "cpu_count": 4,
+    "ram": 16,
+    "bandwidth": 800
+  },
+  "t2.2xlarge": {
+    "cpu_count": 8,
+    "ram": 32,
+    "bandwidth": 1000
+  },
+  "m5.large": {
+    "cpu_count": 2,
+    "ram": 8,
+    "bandwidth": 2120
+  },
+  "m5.xlarge": {
+    "cpu_count": 4,
+    "ram": 16,
+    "bandwidth": 2120
+  },
+  "m5.2xlarge": {
+    "cpu_count": 8,
+    "ram": 32,
+    "bandwidth": 2120
+  },
+  "m5.4xlarge": {
+    "cpu_count": 16,
+    "ram": 64,
+    "bandwidth": 2120
+  },
+  "m5.12xlarge": {
+    "cpu_count": 48,
+    "ram": 192,
+    "bandwidth": 4000
+  },
+  "m5.24xlarge": {
+    "cpu_count": 96,
+    "ram": 384,
+    "bandwidth": 10000
+  },
+  "m4.large": {
+    "cpu_count": 2,
+    "ram": 8,
+    "bandwidth": 450
+  },
+  "m4.xlarge": {
+    "cpu_count": 4,
+    "ram": 16,
+    "bandwidth": 750
+  },
+  "m4.2xlarge": {
+    "cpu_count": 8,
+    "ram": 32,
+    "bandwidth": 1000
+  },
+  "m4.4xlarge": {
+    "cpu_count": 16,
+    "ram": 64,
+    "bandwidth": 2000
+  },
+  "m4.10xlarge": {
+    "cpu_count": 40,
+    "ram": 160,
+    "bandwidth": 4000
+  },
+  "m4.16xlarge": {
+    "cpu_count": 64,
+    "ram": 256,
+    "bandwidth": 10000
+  }
+}

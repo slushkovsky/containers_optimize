@@ -1,7 +1,7 @@
 import tensorflow as tf
 import numpy as np
 
-from agent import Agent
+from net import Net
 from history import History
 from env import env
 import settings
@@ -14,9 +14,9 @@ if __name__ == '__main__':
     tf.reset_default_graph() #Очищаем граф tensorflow
 
     env = Env(server_count=servers_count, containers_count=containers_count)
-    net = Agent(
+    net = Net(
         learning_rate=settings.LEARNING_RATE,
-        states_count=env.states_count,
+        states_count=env.state_size,
         actions_count=env.actions_count,
         hidden_count=settings.NN_HIDDEN_COUNT
     )
@@ -35,8 +35,8 @@ if __name__ == '__main__':
         state = env.reset()
         
         for iter_num in range(settings.TRAIN_ITERATIONS):
-            out = sess.run(
-                net.layer_output,
+            action = sess.run(
+                net.chosen_action,
                 feed_dict={
                     net.state_in: [state]
                 }

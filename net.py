@@ -3,23 +3,12 @@ import tensorflow.contrib.slim as slim
 import numpy as np
 
 
-class Agent(object):
-    '''
-        :param: learning_rate:
-        :param: states_count: MDP states count
-        :param: actions_count: MDP actions count
-        :param: hidden_count: Count of neurons on hidden layer of NN
-
-        :attr: layer_input: Input NN layer
-        :attr: layer_hidden: Hidden NN layer
-        :attr: layer_output: Output NN layer
-        :attr: chosen_action: NN result, next MDP action
-    '''
-
-    def __init__(self, learning_rate, states_count, actions_count, hidden_count):
+class Net(object):
+    
+    def __init__(self, learning_rate, input_count, hidden_count, output_count):
         self.create_layers(
-            input_count=states_count, 
-            output_count=actions_count, 
+            input_count=input_count,
+            output_count=output_count,
             hidden_count=hidden_count
         )
 
