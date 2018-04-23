@@ -9,8 +9,10 @@
 `pipenv install && pipenv shell` - Установит все необходимые зависимости и запустит виртуальное окружение
 
 ## Обучение сети
+Удостовериться, что redis-server запущен: `service redis start`
+
 Для старта выполнить: `python train.py`
-Все данные о состоянии симуляции отправляюся в redis
+Все данные о состоянии симуляции отправляются в redis (в JSON формате)
 
 Запуск frontend'a: `cd frontend && python app.py`
 Frontend запустится на localhost:5000
