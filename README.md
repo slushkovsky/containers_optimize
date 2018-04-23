@@ -1,4 +1,5 @@
 # Оптимизация контейнеров
+[![Documentation Status](https://readthedocs.org/projects/containers-optimize/badge/?version=latest)](http://containers-optimize.readthedocs.io/en/latest/?badge=latest)
 
 ## Установка
 * Установить системные зависимости
