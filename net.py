@@ -17,10 +17,6 @@ class Net(object):
 
         self.chosen_action = tf.argmax(self.layer_output, axis=1)
 
-        #Следующие 6 строк устанавливают процедуру обучения. 
-        #Нейросеть принимает на вход выбранное действие
-        # и соответствующий выигрыш,
-        #чтобы оценить функцию потерь и обновить веса модели.
         self.reward_holder = tf.placeholder(shape=[None], dtype=tf.float32, name='reward_holder')
         self.action_holder = tf.placeholder(shape=[None], dtype=tf.int32, name='action_holder')
         
@@ -30,7 +26,7 @@ class Net(object):
             tf.reshape(self.layer_output, [-1]), # Flattern output layer (make in an 1D array)
             self.indexes
         )
-        #функция потерь
+
         self.loss = -tf.reduce_mean(tf.log(self.responsible_outputs) * self.reward_holder) 
         
         tvars = tf.trainable_variables()

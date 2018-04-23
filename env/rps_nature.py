@@ -20,10 +20,7 @@ class RPSNature(object):
 
     def to_dict(self):
         return {
-            'func': {
-                'name': self.func_name,
-                'formula': self.func
-            },
+            'func': self.func_name,
             'factor': self.factor,
             'max_value': self.max_value
         }

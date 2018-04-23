@@ -21,7 +21,7 @@ class Env(object):
         
         self.state_size = State.get_state_len(containers_count)
 
-        self.__actions = []
+        self.__actions = [lambda : None]
         
         for container_idx in range(containers_count):
             for server_idx in range(servers_count):
@@ -56,6 +56,8 @@ class Env(object):
 
         new_state = State(self.containers, self.step_num)
 
+        self.dump_to_redis(key='containers_env')
+
         return new_state, reward
 
     def __get_step_reward(self, was_container_move: bool):
@@ -65,9 +67,9 @@ class Env(object):
 
         for cpu, ram, traffic in overloads:
             logger.debug(f'Server overload: {cpu} CPU, {ram} RAM, {traffic} traffic')
-            debuff += int(cpu) + int(ram) + int(traffic)
+            debuff += cpu + ram + traffic
 
-        reward =  1 - was_container_move - debuff
+        reward = 100 - debuff
         logger.debug(f'Reward calc: {reward} = 1 - was_container_move({was_container_move}) - debuff({debuff})')
 
         return reward
@@ -77,5 +79,5 @@ class Env(object):
         return sum(resources, Resources())
 
     # def dump_to_redis(self, key=frontend.app.REDIS_KEY):
-    def dump_to_redis(self, key='data'):
+    def dump_to_redis(self, key='containers_env'):
         redis.StrictRedis().set(key, json.dumps(self.to_dict()).encode())

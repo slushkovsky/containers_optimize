@@ -1,16 +1,22 @@
+from logging import getLogger, DEBUG, INFO, WARNING, ERROR, StreamHandler
+import time
+
 import tensorflow as tf
 import numpy as np
 
 from net import Net
 from history import History
 from env.env import Env
-from env.log import logger
 import settings
 
 
+logger = getLogger('train')
+logger.setLevel(DEBUG)
+logger.addHandler(StreamHandler())
+
 if __name__ == '__main__':
     servers_count = 3
-    containers_count = 20
+    containers_count = 5
 
     tf.reset_default_graph() #Очищаем граф tensorflow
 
@@ -36,6 +42,8 @@ if __name__ == '__main__':
             
         state = env.reset()
         
+        old_action = None
+
         for iter_num in range(settings.TRAIN_ITERATIONS):
             action = sess.run(
                 net.chosen_action,
@@ -43,6 +51,13 @@ if __name__ == '__main__':
                     net.layer_input: [state]
                 }
             )[0]
+
+            # if action == old_action and action != 0:
+            #     action += 1
+
+            old_action = action
+
+            logger.debug(f'Iter {iter_num}: action={action} (avg reward={np.mean(history.get_rewards()[-100:])})')
 
             new_state, step_reward = env.step(action)
             history.add(state, action, step_reward, new_state)
@@ -58,13 +73,15 @@ if __name__ == '__main__':
                 }
             )
 
+            # print(grads)
+
             for i, grad in enumerate(grads):
                 gradBuffer[i] += grad
 
             if iter_num % settings.UPDATE_FREQUENCY == 0 and iter_num != 0:
                 sess.run(net.update_batch, feed_dict=dict(zip(net.gradient_holders, gradBuffer)))
-                
+            
                 gradBuffer = [0] * len(gradBuffer)
             
-            if iter_num % settings.PRINT_TIMEOUT_ITERATIONS == 0:
-                print(np.mean(history.get_rewards()[-100:]))
+            if settings.STEP_TIMEOUT:
+                time.sleep(settings.STEP_TIMEOUT)
