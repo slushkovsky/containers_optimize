@@ -13,9 +13,9 @@
 * Запустить виртуальное окружение: `pipenv shell`
 
 ### Обучение
-Для старта выполнить: `python train.py`
+Для старта выполнить: `python train.py`  
 Все данные о состоянии симуляции отправляются в redis (в JSON формате)
 
 ### Frontend
-Запуск frontend'a: `cd frontend && python app.py`
+Запуск frontend'a: `cd frontend && python app.py`  
 Frontend запустится на localhost:5000
